@@ -1,0 +1,82 @@
+:root {
+  --bg: #fffaf5;
+  --card: #ffffff;
+  --line: #eadfce;
+  --text: #2f2a25;
+  --muted: #786b5d;
+  --accent: #ef8f2f;
+  --accent-soft: #f7d2ad;
+  --ok: #2aa876;
+  --warn: #f0a500;
+  --todo: #7d8ca3;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #fffaf5 0%, #fff 100%);
+}
+header {
+  padding: 28px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,.85);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(8px);
+}
+nav a {
+  margin-right: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.hero, .panel, .card, .board-col {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.04);
+}
+.hero { padding: 24px; margin-bottom: 20px; }
+.grid { display: grid; gap: 18px; }
+.grid-2 { grid-template-columns: 1.2fr .8fr; }
+.grid-3 { grid-template-columns: repeat(3,1fr); }
+.panel { padding: 20px; }
+.hint { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge.doing { background: #dff6ea; color: var(--ok); }
+.badge.todo { background: #eef2f7; color: var(--todo); }
+.badge.done { background: #fff3d6; color: var(--warn); }
+.board { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.board-col { padding: 16px; min-height: 240px; }
+.task {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+ul.clean { padding-left: 18px; margin: 8px 0 0; }
+.footer { margin-top: 28px; color: var(--muted); font-size: 14px; }
+.codebox {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #fff8ef;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+}
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .board { grid-template-columns: 1fr; }
+}

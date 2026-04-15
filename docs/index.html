@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SA Learning Hub</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="./index.html">首頁</a>
+      <a href="./weekly.html">每週進度</a>
+      <a href="./mindmap.html">心智圖</a>
+      <a href="../README.md">README</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hint">個人學習控制台</div>
+      <h1 id="hero-title">SA Learning Hub</h1>
+      <p id="hero-subtitle" class="hint"></p>
+      <p><span class="badge doing">目前焦點</span> <strong id="hero-focus"></strong></p>
+    </section>
+
+    <div class="grid grid-2">
+      <section class="panel">
+        <h2>週任務總覽</h2>
+        <div id="week-list"></div>
+      </section>
+      <section class="panel">
+        <h2>學習儀式感</h2>
+        <ul class="clean" id="rituals"></ul>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-top:18px;">
+      <h2>Asana 風格任務看板</h2>
+      <div class="board">
+        <div class="board-col">
+          <h3>待開始</h3>
+          <div id="board-todo"></div>
+        </div>
+        <div class="board-col">
+          <h3>進行中</h3>
+          <div id="board-doing"></div>
+        </div>
+        <div class="board-col">
+          <h3>已完成</h3>
+          <div id="board-done"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">這一版是第一版骨架。內容主體以 repo 的方法論庫與案例庫為主，頁面只是前端入口。</div>
+  </main>
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>
