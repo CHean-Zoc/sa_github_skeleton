@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
@@ -6,81 +6,86 @@
   <title>SA Learning Hub</title>
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
-<body>
-  <header>
-    <nav>
-      <a href="./index.html">首頁</a>
+<body data-page="home">
+  <header class="site-header">
+    <nav class="nav">
+      <a href="./index.html" class="active">首頁</a>
       <a href="./weekly.html">每週進度</a>
       <a href="./mindmap.html">心智圖</a>
       <a href="../README.md">README</a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="badge doing" id="hero-status">目前焦點</div>
+  <main class="container">
+    <section class="hero card">
+      <div class="eyebrow">目前主線</div>
       <h1 id="hero-title">SA Learning Hub</h1>
-      <p class="hint" id="hero-subtitle">以 SQL → 資料模型 → 系統規格 → 測試思維 為主幹</p>
-      <div class="codebox" id="hero-focus">載入中...</div>
-    </section>
-
-    <section class="grid grid-2">
-      <article class="panel">
-        <h2>本週焦點與節奏</h2>
-        <div id="current-week-card"></div>
-      </article>
-      <article class="panel">
-        <h2>學習儀式感</h2>
-        <ul class="clean" id="rituals"></ul>
-      </article>
-    </section>
-
-    <section class="panel" style="margin-top: 18px;">
-      <h2>12 週進度總覽</h2>
-      <div class="grid grid-3" id="week-cards"></div>
-    </section>
-
-    <section class="panel" style="margin-top: 18px;">
-      <h2>Asana 風格任務看板</h2>
-      <div class="board">
-        <div class="board-col">
-          <h3>待開始</h3>
-          <div id="board-todo"></div>
+      <p id="hero-subtitle" class="muted"></p>
+      <div class="hero-meta">
+        <div class="hero-chip">
+          <span class="chip-label">目前焦點</span>
+          <strong id="hero-focus"></strong>
         </div>
-        <div class="board-col">
-          <h3>進行中</h3>
-          <div id="board-doing"></div>
-        </div>
-        <div class="board-col">
-          <h3>已完成</h3>
-          <div id="board-done"></div>
+        <div class="hero-chip">
+          <span class="chip-label">下一步</span>
+          <strong id="hero-next"></strong>
         </div>
       </div>
     </section>
 
-    <section class="grid grid-2" style="margin-top: 18px;">
-      <article class="panel">
-        <h2>本輪方法論重點</h2>
-        <ul class="clean">
-          <li>先把 SQL 學成骨架，不追花式語法。</li>
-          <li>每週至少留下 1 份案例與 1 條方法。</li>
-          <li>用「資料、流程、角色、狀態、規則」五軸看需求。</li>
-          <li>讓「案例 → 歸納 → 方法」的循環穩定發生。</li>
-        </ul>
-      </article>
-      <article class="panel">
-        <h2>回報前檢核</h2>
-        <ul class="clean">
-          <li>能不能不用看答案重寫。</li>
-          <li>能不能白話解釋。</li>
-          <li>能不能對應到工作情境。</li>
-          <li>有沒有留下筆記、題目或 review。</li>
-          <li>有沒有記下卡點與修正方向。</li>
-        </ul>
-      </article>
+    <section class="grid grid-2">
+      <div class="card">
+        <div class="section-head">
+          <h2>本週焦點與節奏</h2>
+        </div>
+        <div id="current-week-panel" class="focus-box"></div>
+      </div>
+      <div class="card">
+        <div class="section-head">
+          <h2>本輪方法論重點</h2>
+        </div>
+        <ul id="method-highlights" class="clean-list"></ul>
+      </div>
     </section>
 
-    <p class="footer">這一版首頁以 repo 的方法論庫與案例庫為主，頁面負責顯示目前焦點、週進度與任務狀態。</p>
+    <section class="card">
+      <div class="section-head">
+        <h2>12 週進度總覽</h2>
+        <button id="toggle-weeks" class="ghost-btn" type="button">查看更多</button>
+      </div>
+      <div id="weeks-grid" class="weeks-grid"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>任務進度</h2>
+      </div>
+      <div class="task-board task-board-2">
+        <div class="board-col">
+          <div class="board-title">進行中</div>
+          <div id="board-doing"></div>
+        </div>
+        <div class="board-col">
+          <div class="board-title">待開始</div>
+          <div id="board-todo"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid-2">
+      <div class="card">
+        <div class="section-head">
+          <h2>回報前檢核</h2>
+        </div>
+        <ul id="report-checklist" class="clean-list"></ul>
+      </div>
+      <div class="card">
+        <div class="section-head">
+          <h2>本週預計產出</h2>
+        </div>
+        <ul id="current-outputs" class="clean-list"></ul>
+      </div>
+    </section>
   </main>
 
   <script src="./assets/js/app.js"></script>
