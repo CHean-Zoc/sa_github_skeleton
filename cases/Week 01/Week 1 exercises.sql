@@ -1,1 +1,0 @@
-<content of Week 1 exercises.sql>
