@@ -1,92 +1,161 @@
+
 async function loadData() {
   const res = await fetch('./assets/data/weekly-progress.json');
   return res.json();
 }
 
-function badgeClass(status) {
-  if (status === 'doing') return 'doing';
-  if (status === 'done') return 'done';
+function badgeText(status){
+  if(status==='doing') return '進行中';
+  if(status==='done') return '已完成';
+  return '待開始';
+}
+function badgeClass(status){
+  if(status==='doing') return 'doing';
+  if(status==='done') return 'done';
   return 'todo';
 }
 
-function badgeText(status) {
-  if (status === 'doing') return '進行中';
-  if (status === 'done') return '已完成';
-  return '待開始';
+function weekCard(week){
+  return `
+    <article class="week-card">
+      <div class="week-top">
+        <div class="week-name">Week ${week.week}<br>${week.title}</div>
+        <span class="badge ${badgeClass(week.status)}">${badgeText(week.status)}</span>
+      </div>
+      <div class="week-goal">${week.goal}</div>
+      <div class="week-section-title">預計輸出</div>
+      <ul class="mini-list">${(week.outputs||[]).map(o=>`<li>${o}</li>`).join('')}</ul>
+      ${(week.blockers&&week.blockers.length)?`<div class="week-section-title" style="margin-top:10px">目前卡點</div><ul class="mini-list">${week.blockers.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}
+    </article>
+  `;
 }
 
-function renderOutputs(outputs = []) {
-  if (!outputs.length) return '<p class="hint">本週尚未填寫輸出項。</p>';
-  return `<ul class="clean">${outputs.map(o => `<li>${o}</li>`).join('')}</ul>`;
-}
-
-function renderBlockers(blockers = []) {
-  if (!blockers.length) return '<p class="hint">目前無阻塞項。</p>';
-  return `<ul class="clean">${blockers.map(b => `<li>${b}</li>`).join('')}</ul>`;
-}
-
-function taskCard(w) {
+function taskCard(week){
   return `
     <div class="task">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
-        <strong>Week ${w.week}</strong>
-        <span class="badge ${badgeClass(w.status)}">${badgeText(w.status)}</span>
+      <div class="task-head">
+        <div class="task-title">Week ${week.week}</div>
+        <span class="badge ${badgeClass(week.status)}">${badgeText(week.status)}</span>
       </div>
-      <div style="margin-top:8px;font-weight:700;">${w.title}</div>
-      <p class="hint" style="margin:8px 0 0;">${w.goal}</p>
+      <div class="task-title">${week.title}</div>
+      <div class="task-sub">${week.goal}</div>
     </div>
   `;
 }
 
-async function renderHome() {
+function renderEmpty(el, text){
+  el.innerHTML = `<div class="empty-state">${text}</div>`;
+}
+
+function buildCurrentWeekDetail(week){
+  return `
+    <div class="detail-box">
+      <div class="detail-title">Week ${week.week}｜${week.title}</div>
+      <div class="detail-row">本週目標：${week.goal}</div>
+      <div class="detail-row">預計輸出</div>
+      <ul class="mini-list">${(week.outputs||[]).map(o=>`<li>${o}</li>`).join('')}</ul>
+      ${(week.blockers&&week.blockers.length)?`<div class="detail-row" style="margin-top:10px">目前卡點</div><ul class="mini-list">${week.blockers.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}
+    </div>`;
+}
+
+let expanded = false;
+let cachedData = null;
+
+function renderWeeks(weeks){
+  const weekCards=document.getElementById('week-cards');
+  if(!weekCards) return;
+  const visibleWeeks = expanded ? weeks : weeks.slice(0, 3);
+  weekCards.innerHTML = visibleWeeks.map(weekCard).join('');
+  const toggleBtn=document.getElementById('toggle-weeks');
+  if(toggleBtn){
+    toggleBtn.textContent = expanded ? '收合顯示' : '查看更多';
+  }
+}
+
+async function renderHome(){
   const data = await loadData();
-  const currentWeek = data.weeks.find(w => w.status === 'doing') || data.weeks.find(w => w.status === 'todo') || data.weeks[0];
+  cachedData = data;
+  const weeks = data.weeks || [];
+  const doing = weeks.find(w=>w.status==='doing') || weeks.find(w=>w.status==='todo') || weeks[0];
+  const doneCount = weeks.filter(w=>w.status==='done').length;
+  const nextWeek = weeks.find(w=>w.week>(doing?.week||0) && w.status!=='done');
 
-  document.getElementById('hero-title').textContent = data.hero.title;
-  document.getElementById('hero-subtitle').textContent = data.hero.subtitle;
-  document.getElementById('hero-focus').textContent = data.hero.current_focus;
+  const heroTitle=document.getElementById('hero-title');
+  const heroSub=document.getElementById('hero-subtitle');
+  const heroFocus=document.getElementById('hero-focus');
+  const heroProgress=document.getElementById('hero-progress');
+  const heroNext=document.getElementById('hero-next');
+  if(heroTitle) heroTitle.textContent=data.hero?.title || 'SA Learning Hub';
+  if(heroSub) heroSub.textContent=data.hero?.subtitle || '';
+  if(heroFocus) heroFocus.textContent=doing ? `Week ${doing.week}｜${doing.title}` : (data.hero?.current_focus || '');
+  if(heroProgress) heroProgress.textContent=`已完成 ${doneCount} / ${weeks.length} 週`;
+  if(heroNext) heroNext.textContent=nextWeek ? `Week ${nextWeek.week}｜${nextWeek.title}` : '持續深化目前主題';
 
-  const currentWeekCard = document.getElementById('current-week-card');
-  currentWeekCard.innerHTML = `
-    <div class="task">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
-        <strong>Week ${currentWeek.week}｜${currentWeek.title}</strong>
-        <span class="badge ${badgeClass(currentWeek.status)}">${badgeText(currentWeek.status)}</span>
-      </div>
-      <p style="margin:10px 0 6px;"><strong>本週目標：</strong>${currentWeek.goal}</p>
-      <div><strong>預計輸出</strong>${renderOutputs(currentWeek.outputs)}</div>
-      <div style="margin-top:10px;"><strong>目前卡點</strong>${renderBlockers(currentWeek.blockers)}</div>
-    </div>
-  `;
+  const currentDetail=document.getElementById('current-week-detail');
+  if(currentDetail && doing) currentDetail.innerHTML = buildCurrentWeekDetail(doing);
 
-  const rituals = document.getElementById('rituals');
-  rituals.innerHTML = data.rituals.map(r => `<li>${r}</li>`).join('');
+  const rituals=document.getElementById('rituals');
+  if(rituals) rituals.innerHTML=(data.rituals||[]).map(r=>`<li>${r}</li>`).join('');
 
-  const weekCards = document.getElementById('week-cards');
-  weekCards.innerHTML = data.weeks.map(w => `
-    <div class="card" style="padding:16px;">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
-        <strong>Week ${w.week}</strong>
-        <span class="badge ${badgeClass(w.status)}">${badgeText(w.status)}</span>
-      </div>
-      <div style="margin-top:8px;font-weight:700;">${w.title}</div>
-      <p class="hint" style="margin:8px 0 10px;">${w.goal}</p>
-      <div class="hint">輸出：${(w.outputs || []).join('、') || '未填寫'}</div>
-    </div>
-  `).join('');
+  renderWeeks(weeks);
 
-  const boardTodo = document.getElementById('board-todo');
-  const boardDoing = document.getElementById('board-doing');
-  const boardDone = document.getElementById('board-done');
-  boardTodo.innerHTML = '';
-  boardDoing.innerHTML = '';
-  boardDone.innerHTML = '';
+  const weeksSummary=document.getElementById('weeks-summary');
+  if(weeksSummary){
+    weeksSummary.textContent=`已完成 ${doneCount}｜進行中 ${weeks.filter(w=>w.status==='doing').length}｜待開始 ${weeks.filter(w=>w.status==='todo').length}`;
+  }
 
-  data.weeks.forEach(w => {
-    if (w.status === 'doing') boardDoing.innerHTML += taskCard(w);
-    else if (w.status === 'done') boardDone.innerHTML += taskCard(w);
-    else boardTodo.innerHTML += taskCard(w);
-  });
+  const toggleBtn=document.getElementById('toggle-weeks');
+  if(toggleBtn){
+    toggleBtn.onclick = () => {
+      expanded = !expanded;
+      renderWeeks(weeks);
+    };
+  }
+
+  const doingCol=document.getElementById('board-doing');
+  const todo=document.getElementById('board-todo');
+  if(doingCol){
+    const doingWeeks = weeks.filter(w=>w.status==='doing');
+    doingCol.innerHTML = doingWeeks.length ? doingWeeks.map(taskCard).join('') : '';
+    if(!doingWeeks.length) renderEmpty(doingCol, '目前沒有進行中的週次。');
+  }
+  if(todo){
+    const todoWeeks = weeks.filter(w=>w.status==='todo');
+    todo.innerHTML = todoWeeks.length ? todoWeeks.map(taskCard).join('') : '';
+    if(!todoWeeks.length) renderEmpty(todo, '目前沒有待開始的週次。');
+  }
+
+  const checklist=document.getElementById('checklist');
+  if(checklist) checklist.innerHTML=(data.checklist||[]).map(i=>`<li>${i}</li>`).join('');
+
+  const methodHighlights=document.getElementById('method-highlights');
+  if(methodHighlights){
+    methodHighlights.innerHTML=(data.method_highlights||[]).map(m=>`
+      <div class="method-box">
+        <div class="detail-title">${m.title}</div>
+        <div class="detail-row">${m.desc}</div>
+      </div>`).join('');
+  }
+
+  const currentOutputs=document.getElementById('current-output-goals');
+  if(currentOutputs && doing){
+    currentOutputs.innerHTML = `
+      <div class="output-box">
+        <div class="detail-title">本週預計輸出</div>
+        <ul class="mini-list">${(doing.outputs||[]).map(o=>`<li>${o}</li>`).join('')}</ul>
+      </div>`;
+  }
 }
 
-document.addEventListener('DOMContentLoaded', renderHome);
+async function renderWeeklyPage(){
+  const allWeeks=document.getElementById('all-weeks');
+  if(!allWeeks) return;
+  const data = cachedData || await loadData();
+  const weeks = data.weeks || [];
+  allWeeks.innerHTML = weeks.map(weekCard).join('');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await renderHome();
+  await renderWeeklyPage();
+});

@@ -3,36 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>心智圖 | SA Learning Hub</title>
+  <title>心智圖｜SA Learning Hub</title>
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 <body>
-  <header>
-    <nav>
+  <header class="topbar">
+    <nav class="nav">
       <a href="./index.html">首頁</a>
       <a href="./weekly.html">每週進度</a>
       <a href="./mindmap.html">心智圖</a>
+      <a href="../README.md">README</a>
     </nav>
   </header>
-  <main>
-    <section class="hero">
-      <div class="hint">主線導航</div>
-      <h1>SA 主線心智圖</h1>
-      <p class="hint">建議把真正會持續變動的內容維護在 <code>mindmap.md</code>，這裡作為入口說明頁。</p>
-    </section>
-
-    <section class="panel">
-      <h2>骨架節點</h2>
-      <div class="grid grid-3">
-        <div class="card panel"><strong>主幹</strong><ul class="clean"><li>SQL</li><li>資料模型</li><li>系統規格</li><li>測試思維</li></ul></div>
-        <div class="card panel"><strong>方法論庫</strong><ul class="clean"><li>SQL 骨架</li><li>JOIN 判斷法</li><li>需求五軸</li><li>檢核 SOP</li></ul></div>
-        <div class="card panel"><strong>案例庫</strong><ul class="clean"><li>每週題目</li><li>ER 草圖</li><li>錯誤筆記</li><li>小專題</li></ul></div>
+  <main class="page">
+    <section class="card">
+      <h1 class="page-title">主線心智圖</h1>
+      <div class="mindmap-box">
+        <ul>
+          <li>主幹：SQL → 資料模型 → 系統規格 → 測試思維</li>
+          <li>方法論庫：SQL 骨架、JOIN 判斷法、需求五軸、檢核 SOP</li>
+          <li>案例庫：每週題目、工作改寫題、ER 草圖、錯誤筆記、小專題</li>
+          <li>進度管理：每週焦點、任務進度、回報欄位、卡點紀錄</li>
+          <li>成果資產：筆記、SQL 題組、模板、規格草稿、專題</li>
+        </ul>
       </div>
-    </section>
-
-    <section class="panel" style="margin-top:18px;">
-      <h2>Mermaid 原始碼存放位置</h2>
-      <div class="codebox">/mindmap.md</div>
     </section>
   </main>
 </body>

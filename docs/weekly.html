@@ -3,43 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>每週進度 | SA Learning Hub</title>
+  <title>每週進度｜SA Learning Hub</title>
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 <body>
-  <header>
-    <nav>
+  <header class="topbar">
+    <nav class="nav">
       <a href="./index.html">首頁</a>
       <a href="./weekly.html">每週進度</a>
       <a href="./mindmap.html">心智圖</a>
+      <a href="../README.md">README</a>
     </nav>
   </header>
-  <main>
-    <section class="hero">
-      <div class="hint">每週固定回報格式</div>
-      <h1>Weekly Review Template</h1>
-      <p class="hint">每週回來時，可以直接按這個格式整理後貼給我。</p>
+  <main class="page">
+    <section class="card">
+      <h1 class="page-title">每週進度</h1>
+      <p class="muted">本頁以週次為單位整理目前計畫，可搭配 cases / methods 持續更新。</p>
     </section>
-
-    <section class="panel">
-      <div class="codebox">1. 這週學了什麼
-2. 做了哪些題目
-3. 產出了什麼
-4. 卡在哪裡
-5. 想讓我幫你檢查什麼
-6. 下週準備做什麼</div>
-    </section>
-
-    <section class="panel" style="margin-top:18px;">
-      <h2>每週檢核</h2>
-      <ul class="clean">
-        <li>能不能不用看答案重寫</li>
-        <li>能不能白話解釋</li>
-        <li>能不能對應工作情境</li>
-        <li>有沒有留下產出</li>
-        <li>有沒有記錄錯誤與修正</li>
-      </ul>
+    <section class="card">
+      <div id="all-weeks" class="week-grid"></div>
     </section>
   </main>
+  <script src="./assets/js/app.js"></script>
 </body>
 </html>
