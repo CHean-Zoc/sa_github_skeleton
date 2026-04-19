@@ -2,30 +2,52 @@
   "hero": {
     "title": "SA Learning Hub",
     "subtitle": "以 SQL → 資料模型 → 系統規格 → 測試思維 為主幹",
-    "current_focus": "Week 01 - SQL 基礎骨架"
+    "current_focus": "Week 01 已完成，下一步進入 Week 02：JOIN 與關聯思維"
   },
   "weeks": [
     {
       "week": 1,
       "title": "SQL 基礎骨架",
-      "goal": "建立 SELECT / WHERE / ORDER BY 基本語感",
-      "status": "doing",
-      "outputs": ["SQL 白話筆記", "工作改寫題 3 題"],
-      "blockers": ["NULL 概念不穩"]
+      "goal": "建立 SELECT / WHERE / ORDER BY 基本語感，並能用白話說清楚 SQL 在工作中的用途。",
+      "status": "done",
+      "outputs": [
+        "Week 01 Notes",
+        "Week 01 Review",
+        "SQL 白話筆記雛形"
+      ],
+      "blockers": [
+        "NULL 與空字串的差別仍需鞏固"
+      ]
     },
     {
       "week": 2,
       "title": "JOIN 與關聯思維",
-      "goal": "理解 INNER JOIN / LEFT JOIN 與 PK / FK",
+      "goal": "理解 INNER JOIN / LEFT JOIN 與 PK / FK，並開始把業務拆成主檔、明細、紀錄。",
+      "status": "doing",
+      "outputs": [
+        "ER 草圖",
+        "JOIN 白話版",
+        "主檔／明細／紀錄差異整理"
+      ],
+      "blockers": []
+    },
+    {
+      "week": 3,
+      "title": "資料規則與欄位設計",
+      "goal": "理解 INSERT / UPDATE / DELETE 與 NOT NULL、UNIQUE、CHECK、FK 的實務意義。",
       "status": "todo",
-      "outputs": ["ER 草圖", "JOIN 白話版"],
+      "outputs": [
+        "欄位規格 vs 資料規則筆記",
+        "簡單資料表練習"
+      ],
       "blockers": []
     }
   ],
   "rituals": [
-    "開始前先看本週焦點",
-    "每週至少留下 1 頁白話筆記",
-    "每週至少做 3 題工作改寫題",
-    "每週固定回報一次"
+    "開始前先看本週焦點。",
+    "每週至少留下 1 頁白話筆記。",
+    "每週至少做 3 題工作改寫題。",
+    "每週固定回報一次。",
+    "每週至少從案例抽出 1 條方法。"
   ]
 }
